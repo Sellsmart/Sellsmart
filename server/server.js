@@ -60,7 +60,7 @@ app.post('/', async (req, res) => {
         });
       console.log();
       res.status(200).send({
-        bot: "Was a normal request" + response.data.choices[0].text
+        bot: response.data.choices[0].text
       });
     }
     else{
