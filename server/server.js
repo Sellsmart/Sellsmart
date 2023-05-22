@@ -52,7 +52,7 @@ app.post('/', async (req, res) => {
     }
     if(sectionName.includes("Normal")){
       const response = await openai.createCompletion({
-        model: "text-curie-001",
+        model: "text-davinci-002",
         prompt: `"Answer this prompt shortly. Be a small chatbot that has no personal live." + ${prompt}` ,
         temperature: 0.2, // Higher values means the model will take more risks.
         max_tokens: 63, // The maximum number of tokens to generate in the completion. Most models have a context length of 2048 tokens (except for the newest models, which support 4096).
