@@ -31,7 +31,7 @@ app.post('/', async (req, res) => {
 
     const SectionResponse = await openai.createCompletion({
       model: "text-davinci-002",
-      prompt: `"You are a chatbot on a website that sales houses. Is this question: " + ${prompt} + "a Normal-Chat-, Contact-, Website-instruction-, Family- or Product-related one? Respond with one word` ,
+      prompt: `"You are a chatbot on a website that sales houses. Is this question: " + ${prompt} + "a Normal-Chat-, general-, Contact-, feature-, competition-, products-, shipment-, Website-instruction-, Family- or Product-related one? Respond with one word` ,
       temperature: 0.5, // Higher values means the model will take more risks.
       max_tokens: 255, // The maximum number of tokens to generate in the completion. Most models have a context length of 2048 tokens (except for the newest models, which support 4096).
      
@@ -49,6 +49,26 @@ app.post('/', async (req, res) => {
     if(sectionName.includes("Website")){
       console.log("Its a site question");
       dataset = process.env.site;
+    }
+    if(sectionName.includes("General")){
+      console.log("Its a site question");
+      dataset = process.env.general;
+    }
+    if(sectionName.includes("feature")){
+      console.log("Its a site question");
+      dataset = process.env.features;
+    }
+    if(sectionName.includes("competition")){
+      console.log("Its a site question");
+      dataset = process.env.competition;
+    }
+    if(sectionName.includes("shipment")){
+      console.log("Its a site question");
+      dataset = process.env.shipment;
+    }
+    if(sectionName.includes("product")){
+      console.log("Its a site question");
+      dataset = process.env.products;
     }
     if(sectionName.includes("Normal")){
       const response = await openai.createCompletion({
