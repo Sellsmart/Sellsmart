@@ -1,21 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@100;300;400;500;700;800;900&display=swap");
 
+
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Alegreya Sans", sans-serif;
+  border-radius: 10px;
+  
 }
 
 body {
-  background: #343541;
+  
+
 }
 
 #app {
   width: 100vw;
-  height: 100vh;
-  background: #343541;
-
+  max-height: 100vh;
+  background: #688cb78e;
+  position: absolute;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,7 +56,7 @@ body {
 }
 
 .ai {
-  background: #40414F;
+  background: #7f8191;
 }
 
 .chat {
@@ -113,7 +119,7 @@ body {
 }
 
 form {
-  width: 100%;
+  width: 90%;
   max-width: 1280px;
   margin: 0 auto;
   padding: 10px;
@@ -122,6 +128,8 @@ form {
   display: flex;
   flex-direction: row;
   gap: 10px;
+  border-radius: 20px;
+  margin-bottom: 15px;
 }
 
 textarea {
