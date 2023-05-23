@@ -30,15 +30,15 @@ app.post('/', async (req, res) => {
     const prompt = req.body.prompt;
 
     const SectionResponse = await openai.createCompletion({
-      model: "text-davinci-002",
-      prompt: `"Is this question: " + ${prompt} + "a Normal-Chat-, general-, Contact-, feature-, competition-, products-, shipment-, Website-instruction-, Family- or Product-related one? Respond with one word` ,
+      model: "text-curie-001",
+      prompt: `"Act like a chatbot on a website that helps the customer buy something from that specific website. Dont mention yourself. Answer as short as possible. Dont ever provide information you dont know about, instead tell the customer that you dont know and offer alternatives. Act kind and try (if gently possible) to convert the customer into a buying one. This is his question: " + ${prompt} + " Answer it using this data about the busines: Our Chatbot is one of the most advanced AI Chatbots out there. Super functional chatbot that help converts customer much faster and with much better experience. Easy to use, don't need anymore staff + no extra staff cost. works 24/7 + extremely good because it knows you're website very well. Easy to impliment + adapt to your design of your website. Compared to other website, this chatbot is: faster, can answer questions that other chatbot can't. It is also trained to be nice to increase conversion. 3 models/ prices: Start: Fully working chatbot, Easy implementation, Chatbot trained on website, 550$. Pro: Same as start but with Custom chatbot design, 800$. Same as Starter but with Custom Chatbot design and extra features., 3200$. If they contact we can talk about discounts. Product shipment: around 2-3 days. No accessoires needed. Fully personalized. Infinite lifespan. Contact: Email: felixwolny1@gmail.com, phone: none"` ,
       temperature: 0.5, // Higher values means the model will take more risks.
       max_tokens: 255, // The maximum number of tokens to generate in the completion. Most models have a context length of 2048 tokens (except for the newest models, which support 4096).
      
       /*frequency_penalty: 0.5, // Number between -2.0 and 2.0. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim.
       presence_penalty: 0, // Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.
     */});
-    console.log(SectionResponse.data.choices[0].message);
+    /*console.log(SectionResponse.data.choices[0].message);
     const sectionName = SectionResponse.data.choices[0].text.trim();
     let dataset = process.env.normal;
     console.log(sectionName);
@@ -95,7 +95,7 @@ app.post('/', async (req, res) => {
       res.status(200).send({
         bot: response.data.choices[0].text
       }); 
-    }
+    }*/
 
   } catch (error) {
     console.error(error)
