@@ -48,6 +48,7 @@ const answer = sectionCheck.data.choices[0].text;
     }
     else if (answer.includes("Product")){
       information = " 3 models/ prices: Start: Fully working chatbot, Easy implementation, Chatbot trained on website, 550$. Pro: Same as start but with Custom chatbot design, 800$. Same as Starter but with Custom Chatbot design and extra features., 3200$.";
+
     }
     else if(answer.includes("Contact")){
       information = " Contact: Email: felixwolny1@gmail.com, phone: none";
