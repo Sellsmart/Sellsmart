@@ -5,7 +5,39 @@ const form = document.querySelector('form');
 const chatContainer = document.querySelector('#chat_container');
 
 let loadInterval;
+collapseChatbot()
+document.getElementById('area').addEventListener('input', function() {
+  // Trigger the openChatbot() function whenever the text inside the textarea changes
+  openChatbot();
+});
+document.getElementById('area').addEventListener('blur', function() {
+  // Trigger the openChatbot() function whenever the text inside the textarea changes
+  collapseChatbot();
+});
+function openChatbot(){
+  var wrappers = document.getElementsByClassName("wrapper");
+  for (var i = 0; i < wrappers.length; i++) {
+    wrappers[i].style.display = "block";
+  }
+  document.getElementById("app").style.width = "300px";
+}
+function collapseChatbot(){
 
+
+  document.getElementById("app").style.width = "100px";
+  
+  var wrappers = document.getElementsByClassName("wrapper");
+  for (var i = 0; i < wrappers.length; i++) {
+    wrappers[i].style.display = "none";
+  }
+}
+var textarea = document.getElementById('area');
+
+// Add a click event listener
+textarea.addEventListener('click', function() {
+  // Increase the height of the textarea to 300px
+  openChatbot()
+});
 function loader(element){
   element.textContent = '';
 
@@ -58,10 +90,23 @@ function chatStripe (isAi, value, uniqueId){
   )
 }
 
-const handleSubmit = async(e) =>{
+const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const data = new FormData (form);
+  const data = new FormData(form);
+  /*if(data.get('prompt').trim() == "x"){
+    collapseChatbot();
+    form.reset();
+    return;
+  }*/
+  // Check if the input is "x" and call the collapseChatbot() function
+  
+  if(data.get('prompt').trim() == ""){
+    console.log("Nope");
+    form.reset();
+    return;
+  }
+
 
   //users stripe
   chatContainer.innerHTML += chatStripe(false, data.get('prompt'));
@@ -81,8 +126,7 @@ const handleSubmit = async(e) =>{
   loader(messageDiv);
 
   // fetch data from server
-
-  const response = await fetch('https://sellsmart.onrender.com', {
+  const response = await fetch('http://localhost:5102', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -90,25 +134,26 @@ const handleSubmit = async(e) =>{
     body: JSON.stringify({
       prompt: data.get('prompt')
     })
-  })
+  });
 
   clearInterval(loadInterval);
   messageDiv.innerHTML = '';
 
-  if(response.ok){
-    const data = await response.json();
-    console.log(response);
-    const parsedData = data.bot.trim();
+  if (response.ok) {
+    const responseData = await response.json();
+    console.log(responseData);
+    const parsedData = responseData.bot.trim();
 
     typeText(messageDiv, parsedData);
-  }else{
+  } else {
     const err = await response.text();
 
     messageDiv.innerHTML = "Something went wrong";
-
     alert(err);
   }
-}
+};
+
+
 
 form.addEventListener('submit', handleSubmit);
 form.addEventListener('keyup', (e) => {
