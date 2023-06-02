@@ -4,8 +4,21 @@ import user from './assets/user.svg';
 const form = document.querySelector('form');
 const chatContainer = document.querySelector('#chat_container');
 
+let isOnPhone = true;
+let el = document.getElementById("app");
+
 let loadInterval;
 collapseChatbot()
+//check()
+
+function check(){
+  if(screen.width < 600){
+    isOnPhone = true;
+  }
+  else{
+    isOnPhone = false;
+  }
+}
 /*document.getElementById('area').addEventListener('input', function() {
 
   openChatbot();
@@ -38,17 +51,28 @@ document.addEventListener('click', function(event) {
   openChatbot()
 });*/
 function openChatbot(){
-  var wrappers = document.getElementsByClassName("wrapper");
-  for (var i = 0; i < wrappers.length; i++) {
-    wrappers[i].style.display = "block";
+
+  if(isOnPhone){
+    
+    el.style.bottom = "50vh";
+   
+ 
   }
-  document.getElementById("app").style.width = "300px";
+  
+    var wrappers = document.getElementsByClassName("wrapper");
+    for (var i = 0; i < wrappers.length; i++) {
+      wrappers[i].style.display = "block";
+    }
+    document.getElementById("app").style.width = "300px";
+  
 }
 function collapseChatbot(){
 
-console.log(screen.width);
+  console.log(screen.width);
   document.getElementById("app").style.width = "100px";
-  
+  if(isOnPhone){
+    el.style.bottom = "0vh";
+  }
   var wrappers = document.getElementsByClassName("wrapper");
   for (var i = 0; i < wrappers.length; i++) {
     wrappers[i].style.display = "none";
@@ -190,7 +214,7 @@ const handleSubmit = async (e) => {
   loader(messageDiv);
 
   // fetch data from server
-  const response = await fetch('https://sellsmart.onrender.com', {
+  const response = await fetch('http://localhost:5102', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
