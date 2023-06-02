@@ -9,7 +9,7 @@ let el = document.getElementById("app");
 
 let loadInterval;
 collapseChatbot()
-var parentURL = window.parent.location.href;
+var parentURL = window.location.href;
         console.log(parentURL);
 check()
 
