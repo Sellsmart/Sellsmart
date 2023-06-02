@@ -6,14 +6,37 @@ const chatContainer = document.querySelector('#chat_container');
 
 let loadInterval;
 collapseChatbot()
-document.getElementById('area').addEventListener('input', function() {
-  // Trigger the openChatbot() function whenever the text inside the textarea changes
+/*document.getElementById('area').addEventListener('input', function() {
+
   openChatbot();
 });
-document.getElementById('area').addEventListener('blur', function() {
-  // Trigger the openChatbot() function whenever the text inside the textarea changes
+
+document.getElementById('area').addEventListener('focusout', function(event) {
+  // Check if the blur event was triggered by clicking on the chat area
+  console.log("Tries blur");
+  
+
   collapseChatbot();
 });
+var textarea = document.getElementById('area');*/
+document.addEventListener('click', function(event) {
+  var clickedElement = event.target;
+  var clickedElementId = clickedElement.id;
+
+  console.log('Clicked element ID: ' + clickedElementId);
+  if(clickedElementId == ""){
+    collapseChatbot();
+  }
+  else {
+    openChatbot();
+  }
+});
+
+// Add a click event listener
+/*textarea.addEventListener('click', function() {
+  // Increase the height of the textarea to 300px
+  openChatbot()
+});*/
 function openChatbot(){
   var wrappers = document.getElementsByClassName("wrapper");
   for (var i = 0; i < wrappers.length; i++) {
@@ -23,7 +46,7 @@ function openChatbot(){
 }
 function collapseChatbot(){
 
-
+console.log(screen.width);
   document.getElementById("app").style.width = "100px";
   
   var wrappers = document.getElementsByClassName("wrapper");
@@ -31,13 +54,7 @@ function collapseChatbot(){
     wrappers[i].style.display = "none";
   }
 }
-var textarea = document.getElementById('area');
 
-// Add a click event listener
-textarea.addEventListener('click', function() {
-  // Increase the height of the textarea to 300px
-  openChatbot()
-});
 function loader(element){
   element.textContent = '';
 
@@ -50,18 +67,51 @@ function loader(element){
   }, 300);
 }
 
-function typeText(element, text){
+function typeText(element, text) {
   let index = 0;
+  let previousWord = '';
+  let currentWord = '';
 
   let interval = setInterval(() => {
-    if(index < text.length){
-      element.innerHTML += text.charAt(index);
+    if (index < text.length) {
+      const currentChar = text.charAt(index);
+console.log(currentWord);
+      // Check if the current character is a whitespace character or a punctuation mark
+      if (/\s|[^\w/.:]/u.test(currentChar)) {
+        
+        // Check if the previous word is a link
+        if (previousWord.startsWith('https://') || previousWord.startsWith('http://')) {
+          // Convert the previous word into a clickable link
+          const link = `<a href="${previousWord}">${previousWord}</a>`;
+          element.innerHTML = element.innerHTML.replace(previousWord, link);
+        }
+
+        previousWord = currentWord;
+        currentWord = '';
+      } else {
+        currentWord += currentChar;
+      }
+
+      // Append the current character
+      element.innerHTML += currentChar;
       index++;
-    }else{
+    } else {
+      if (currentWord.startsWith('https://') || currentWord.startsWith('http://')) {
+          // Convert the previous word into a clickable link
+          const link = `<a href="${currentWord}">${currentWord}</a>`;
+          element.innerHTML = element.innerHTML.replace(currentWord, link);
+        }
       clearInterval(interval);
     }
-  }, 20)
+  }, 20);
 }
+
+
+ 
+
+ 
+
+
 
 function generateUniqueId(){
   const timestamp = Date.now();
@@ -74,10 +124,10 @@ function generateUniqueId(){
 function chatStripe (isAi, value, uniqueId){
   return(
     `
-    <div class="wrapper ${isAi && 'ai'}">
-    <div class="chat">
-    <div class="profile">
-    <img
+    <div id="wrap" class="wrapper ${isAi && 'ai'}">
+    <div id="chatbox" class="chat">
+    <div id="profileId" class="profile">
+    <img id="imagepic"
     src="${isAi ? bot : user}"
     alt="${isAi ? 'bot':user}"
     />
@@ -89,6 +139,7 @@ function chatStripe (isAi, value, uniqueId){
 
   )
 }
+// Function to convert plain text links into clickable links
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -126,7 +177,7 @@ const handleSubmit = async (e) => {
   loader(messageDiv);
 
   // fetch data from server
-  const response = await fetch('https://sellsmart.onrender.com', {
+  const response = await fetch('http://localhost:5102', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
