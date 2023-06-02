@@ -9,7 +9,9 @@ let el = document.getElementById("app");
 
 let loadInterval;
 collapseChatbot()
-//check()
+var parentURL = window.parent.location.href;
+        console.log(parentURL);
+check()
 
 function check(){
   if(screen.width < 600){
@@ -61,8 +63,8 @@ function openChatbot(){
   if(isOnPhone){
     
     el.style.bottom = "0vh";
-   
- 
+   window.parent.location.href = "https://www.google.com";
+    return; 
   }
   
     var wrappers = document.getElementsByClassName("wrapper");
@@ -74,11 +76,13 @@ function openChatbot(){
 }
 function collapseChatbot(){
 
-  console.log(screen.width);
-  document.getElementById("app").style.width = "100px";
+  
   if(isOnPhone){
     el.style.bottom = "0vh";
+    return;
   }
+  console.log(screen.width);
+  document.getElementById("app").style.width = "100px";
   var wrappers = document.getElementsByClassName("wrapper");
   for (var i = 0; i < wrappers.length; i++) {
     wrappers[i].style.display = "none";
