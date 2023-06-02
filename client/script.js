@@ -50,11 +50,17 @@ document.addEventListener('click', function(event) {
   // Increase the height of the textarea to 300px
   openChatbot()
 });*/
+window.addEventListener('scroll', setChatbotPosition);
+
+function setChatbotPosition(){
+  el.style.bottom = "0vh";
+  el.style.right = "0vw";
+}
 function openChatbot(){
 
   if(isOnPhone){
     
-    el.style.bottom = "50vh";
+    el.style.bottom = "0vh";
    
  
   }
