@@ -35,7 +35,7 @@ app.post('/', async (req, res) => {
 
     const sectionCheck = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: "Sort this request " + prompt + " into one of these categories: advantages, different Models, Products, Contact, Discounts, Shipment. Respond with only the section name",
+      prompt: "Sort this request " + prompt + " into one of these categories: advantages, different Models, Products, Contact, Discounts, Shipment, Website instructions. Respond with only the section name",
       temperature: 0.1,
     })
 const answer = sectionCheck.data.choices[0].text;
@@ -46,15 +46,18 @@ const answer = sectionCheck.data.choices[0].text;
     else if(answer.includes("Models")){
       information = " 3 models/ prices: Start: Fully working chatbot, Easy implementation, Chatbot trained on website, 550$. Pro: Same as start but with Custom chatbot design, 800$. Same as Starter but with Custom Chatbot design and extra features., 3200$.";
     }
+    else if(answer.includes("Website")){
+      information = "Homepage link: https://sellsmart.github.io/chatbot/ . "
+    }
     else if (answer.includes("Product")){
       information = " 3 models/ prices: Start: Fully working chatbot, Easy implementation, Chatbot trained on website, 550$. Pro: Same as start but with Custom chatbot design, 800$. Same as Starter but with Custom Chatbot design and extra features., 3200$.";
 
     }
     else if(answer.includes("Contact")){
-      information = " Contact: Email: felixwolny1@gmail.com, phone: none";
+      information = " Contact: Email: felixwolny1@gmail.com, phone: none, website: https://www.sellsmart.github.io/chatbot";
     }
     else if(answer.includes("Shipment")){
-      information = " Product shipment: around 2-3 days.";
+      information = " Product shipment: around 5-6 days. More information here: https://www.google.com";
     }
     else if(answer.includes("Discount")){
       information=" If you contact we can talk about discounts.";
