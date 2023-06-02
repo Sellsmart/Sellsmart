@@ -66,7 +66,14 @@ function loader(element){
     }
   }, 300);
 }
-
+function setAllToParent(){
+  console.log("Trying to set");
+  var links = document.getElementsByTagName('a');
+            for (var i = 0; i < links.length; i++) {
+              console.log("Setting to parent");
+                links[i].target = '_parent';
+            }
+}
 function typeText(element, text) {
   let index = 0;
   let previousWord = '';
@@ -84,8 +91,10 @@ console.log(currentWord);
           // Convert the previous word into a clickable link
           const link = `<a href="${previousWord}">${previousWord}</a>`;
           element.innerHTML = element.innerHTML.replace(previousWord, link);
+          
         }
-
+        console.log("Runss");
+        setAllToParent();
         previousWord = currentWord;
         currentWord = '';
       } else {
@@ -101,6 +110,8 @@ console.log(currentWord);
           const link = `<a href="${currentWord}">${currentWord}</a>`;
           element.innerHTML = element.innerHTML.replace(currentWord, link);
         }
+        console.log("Runs");
+        setAllToParent();
       clearInterval(interval);
     }
   }, 20);
@@ -111,7 +122,9 @@ console.log(currentWord);
 
  
 
-
+function openLinkInParent() {
+  window.parent.location.href = 'https://sellsmart.github.io/chatbot/'; // Replace with the desired URL
+}
 
 function generateUniqueId(){
   const timestamp = Date.now();
@@ -177,7 +190,7 @@ const handleSubmit = async (e) => {
   loader(messageDiv);
 
   // fetch data from server
-  const response = await fetch('https://sellsmart.onrender.com', {
+  const response = await fetch('http://localhost:5102', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
