@@ -3,37 +3,50 @@ import user from './assets/user.svg';
 
 const form = document.querySelector('form');
 const chatContainer = document.querySelector('#chat_container');
+let lastInput ="Hi";
+let containsOffer = false;
+let offerName = "";
+let isReadyForNewRequest = true;
 
 let isOnPhone = true;
 let el = document.getElementById("app");
 
 let loadInterval;
-collapseChatbot()
-var parentURL = window.location.href;
-        console.log(parentURL);
-check()
+let isFirstQuestion = true;
 
+
+//check()
+openChatbot()
+spawnHelloMessage("Hi 👋, I am your personal shopping assistant. Nice to meet you 🤩")
+const minimumDelay = 3000;
+await new Promise((resolve) => setTimeout(resolve, minimumDelay));
+spawnHelloMessage("What product are you searching for?")
+isFirstQuestion = false;
+
+function spawnHelloMessage(helloMessage){
+  const uniqueId = generateUniqueId();
+
+  chatContainer.innerHTML += chatStripe(true, " ", uniqueId);
+
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+
+  const messageDiv = document.getElementById(uniqueId);
+  typeText(messageDiv, helloMessage);
+}
 function check(){
   if(screen.width < 600){
     isOnPhone = true;
+    var wrappers = document.getElementsByClassName("wrapper");
+    for (var i = 0; i < wrappers.length; i++) {
+      wrappers[i].style.display = "block";
+    }
+    document.getElementById("app").style.width = "auto";
   }
   else{
     isOnPhone = false;
   }
 }
-/*document.getElementById('area').addEventListener('input', function() {
 
-  openChatbot();
-});
-
-document.getElementById('area').addEventListener('focusout', function(event) {
-  // Check if the blur event was triggered by clicking on the chat area
-  console.log("Tries blur");
-  
-
-  collapseChatbot();
-});
-var textarea = document.getElementById('area');*/
 document.addEventListener('click', function(event) {
   var clickedElement = event.target;
   var clickedElementId = clickedElement.id;
@@ -47,11 +60,7 @@ document.addEventListener('click', function(event) {
   }
 });
 
-// Add a click event listener
-/*textarea.addEventListener('click', function() {
-  // Increase the height of the textarea to 300px
-  openChatbot()
-});*/
+
 window.addEventListener('scroll', setChatbotPosition);
 
 function setChatbotPosition(){
@@ -62,23 +71,25 @@ function openChatbot(){
 
   if(isOnPhone){
     
-    el.style.bottom = "0vh";
-   window.parent.location.href = "https://www.google.com";
+    console.log("IS ON PHONE");
+    document.getElementById("app").style.width = "auto";
+    document.getElementById("app").style.marginLeft = "40px";
     return; 
   }
-  
+  else{
     var wrappers = document.getElementsByClassName("wrapper");
     for (var i = 0; i < wrappers.length; i++) {
       wrappers[i].style.display = "block";
     }
     document.getElementById("app").style.width = "300px";
+  }
   
 }
 function collapseChatbot(){
 
   
   if(isOnPhone){
-    el.style.bottom = "0vh";
+    
     return;
   }
   console.log(screen.width);
@@ -108,13 +119,60 @@ function setAllToParent(){
                 links[i].target = '_parent';
             }
 }
+function checkAndReplace(textInput) {
+
+  var text = textInput;
+  var words = text.split(" ");
+console.log("Is checking and replacing");
+  for (var i = 0; i < words.length; i++) {
+    var word = words[i];
+
+    if (word.startsWith("$§|")) {
+      var replacedWord = ""; // Remove the "$§|" prefix at front and bottom
+      containsOffer = true;
+      words[i] = replacedWord;
+      offerName = word.substring(4, word.length -4);
+    }
+  }
+
+  return words.join(" ");
+}
+
+function checkForOffer() {
+  // Your function logic here
+  console.log("IS CHECKING FOR OFFER");
+  if(containsOffer){
+    var originalString = offerName;
+    offerName = originalString.replace(/-/g, ' ');
+    //Convert to readable string
+    console.log("This is the offername " + offerName);
+    containsOffer = false;
+    if(offerName.toLowerCase().includes("nike") && offerName.toLowerCase().includes("dunk") && offerName.toLowerCase().includes("red")){
+      chatContainer.innerHTML += chatStripe(true, offerName  + "\n" + `<div style="background-image: url(/assets/recimg/TeamRed.jpg);"class="imgForRecommend"></div><a class="buybutton" href="https://www.google.com" target="_parent">Check it out</a>`, "salestext"); 
+    }
+    else if(offerName.toLowerCase().includes("nike") && offerName.toLowerCase().includes("dunk") && offerName.toLowerCase().includes("gold")){ 
+      chatContainer.innerHTML += chatStripe(true, offerName  + "\n" + `<div style="background-image: url(/assets/recimg/TeamGold.jpg);"class="imgForRecommend"></div><a class="buybutton" href="https://www.google.com" target="_parent">Check it out</a>`, "salestext"); 
+
+    }
+    else if(offerName.toLowerCase().includes("nike") && offerName.toLowerCase().includes("dunk") && offerName.toLowerCase().includes("orange")){
+      chatContainer.innerHTML += chatStripe(true, offerName  + "\n" + `<div style="background-image: url(/assets/recimg/TeamOrange.jpg);"class="imgForRecommend"></div><a class="buybutton" href="https://www.google.com" target="_parent">Check it out</a>`, "salestext"); 
+
+    }
+   
+}
+chatContainer.scrollTop = chatContainer.scrollHeight;
+  console.log("Triggered function!");
+}
+
+
 function typeText(element, text) {
   let index = 0;
   let previousWord = '';
   let currentWord = '';
-
+  text = checkAndReplace(text);
   let interval = setInterval(() => {
     if (index < text.length) {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
       const currentChar = text.charAt(index);
 console.log(currentWord);
       // Check if the current character is a whitespace character or a punctuation mark
@@ -123,7 +181,7 @@ console.log(currentWord);
         // Check if the previous word is a link
         if (previousWord.startsWith('https://') || previousWord.startsWith('http://')) {
           // Convert the previous word into a clickable link
-          const link = `<a href="${previousWord}">${previousWord}</a>`;
+          const link = `<a class="inChatLink" href="${previousWord}">${previousWord}</a>`;
           element.innerHTML = element.innerHTML.replace(previousWord, link);
           
         }
@@ -141,14 +199,18 @@ console.log(currentWord);
     } else {
       if (currentWord.startsWith('https://') || currentWord.startsWith('http://')) {
           // Convert the previous word into a clickable link
-          const link = `<a href="${currentWord}">${currentWord}</a>`;
+          const link = `<a class="inChatLink" href="${currentWord}">${currentWord}</a>`;
           element.innerHTML = element.innerHTML.replace(currentWord, link);
+          
         }
+        checkForOffer();
         console.log("Runs");
         setAllToParent();
+        
       clearInterval(interval);
     }
   }, 20);
+  
 }
 
 
@@ -167,7 +229,17 @@ function generateUniqueId(){
 
   return `id-${timestamp}-${hexadecimalString}`;
 }
-
+function WaitAndTryAgain(divForMg){
+  console.log("WE THREW AN 429 error. retrying last request");
+  typeText(divForMg, "Hi 👋, we are currently on high demand. Please stand by for 20 seconds. Thank you 😀");
+  setTimeout(() => {
+    // Retry the API call or perform any other necessary actions
+    // Call the function that makes the API request again
+    document.getElementById("area").value = lastInput;
+  handleSubmit();
+  }, 20000);
+  
+}
 function chatStripe (isAi, value, uniqueId){
   return(
     `
@@ -189,7 +261,17 @@ function chatStripe (isAi, value, uniqueId){
 // Function to convert plain text links into clickable links
 
 const handleSubmit = async (e) => {
-  e.preventDefault();
+  
+  if(isReadyForNewRequest == false){
+    form.reset();
+    console.log("Just one at a time");
+    return;
+  }
+  isReadyForNewRequest = false;
+  containsOffer = false;
+  if(e != null){
+    e.preventDefault();
+  }
 
   const data = new FormData(form);
   /*if(data.get('prompt').trim() == "x"){
@@ -205,10 +287,10 @@ const handleSubmit = async (e) => {
     return;
   }
 
-
+  console.log("We are sending an API request with text: " + data.get('prompt'));
   //users stripe
   chatContainer.innerHTML += chatStripe(false, data.get('prompt'));
-
+lastInput = data.get('prompt');
   //Loader 
 
   form.reset();
@@ -224,13 +306,20 @@ const handleSubmit = async (e) => {
   loader(messageDiv);
 
   // fetch data from server
-  const response = await fetch('https://sellsmart.onrender.com', {
+  let promptToSend = "";
+  if(isFirstQuestion){
+    promptToSend = data.get('prompt') + "??%&!";
+  }
+  else{
+    promptToSend = data.get('prompt');
+  }
+  const response = await fetch('http://localhost:5102', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      prompt: data.get('prompt')
+      prompt: promptToSend
     })
   });
 
@@ -238,16 +327,28 @@ const handleSubmit = async (e) => {
   messageDiv.innerHTML = '';
 
   if (response.ok) {
+    isReadyForNewRequest = true;
     const responseData = await response.json();
     console.log(responseData);
     const parsedData = responseData.bot.trim();
 
     typeText(messageDiv, parsedData);
+    
+    
   } else {
-    const err = await response.text();
-
-    messageDiv.innerHTML = "Something went wrong";
-    alert(err);
+    isReadyForNewRequest = true;
+    console.log("Response status: " + response.status);
+    if (response.status === 429) {
+      // Handle 429 error (Too Many Requests)
+      console.log("Bro man 429 is in da hood");
+      console.log("We are retrying");
+      WaitAndTryAgain(messageDiv);
+    } else {
+      const err = await response.text();
+      
+      messageDiv.innerHTML = "Something went wrong";
+   
+    }
   }
 };
 

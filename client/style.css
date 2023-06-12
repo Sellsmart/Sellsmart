@@ -11,15 +11,13 @@
   
 }
 
-body {
-  
 
-}
 
 #app {
+  padding-top: 10px;
   width: 100px;
   max-height: 100vh;
-  background: #688cb78e;
+  background: #82b9ba8f;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -29,8 +27,51 @@ body {
   justify-content: space-between;
   transition: width 0.5s ease;
 }
+.inChatLink{
+  color: black;
+font-size: 25;
+line-height: 2;
+transition: scale 200ms;
+}
+.inChatLink:hover{
+  scale: 0.98;
+}
 #area{
   resize: none;
+}
+
+.novis{
+  display: none;
+}
+.buybutton{
+  font-size: 22px;
+  background-color: rgb(6, 4, 0);
+  color: white;
+  padding: 15px;
+  line-height: 2;
+  text-align: center;
+  line-height: 4;
+  margin-left: 10px;
+  text-decoration: none;
+  transition: scale 200ms;
+}
+#salestext{
+  line-height: 1.3;
+    color: rgb(246, 254, 250);
+    font-size: 25px;
+    margin-left: 10px;
+    text-decoration: underline;
+}
+.imgForRecommend{
+  margin-top: 10px;
+  width: 180px;
+  height: 130px;
+  object-fit: scale-down;
+  background-size: 180px auto;
+  background-repeat: no-repeat;
+}
+.buybutton:hover{
+  scale: 1.02;
 }
 #chat_container {
   flex: 1;
@@ -55,12 +96,18 @@ body {
 }
 
 .wrapper {
-  width: 100%;
   padding: 15px;
+  background-color: cadetblue;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .ai {
-  background: #7f8191;
+  background: #117d8a;
+width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .chat {
