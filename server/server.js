@@ -35,7 +35,7 @@ app.post('/', async (req, res) => {
     let allTheTokens = 0;
     let finalresponse = ""; 
     const minimumDelays = 100;
-    await new Promise((resolve) => setTimeout(resolve, minimumDelays));
+
     const prompt = req.body.prompt;
     const generalCheck = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
@@ -62,7 +62,7 @@ app.post('/', async (req, res) => {
       allTheTokens += productCheck.data.usage.total_tokens;
   
       const minimumDelay = 100;
-  await new Promise((resolve) => setTimeout(resolve, minimumDelay));
+
   
   
       finalresponse = productCheck.data.choices[0].message.content;
@@ -80,7 +80,7 @@ app.post('/', async (req, res) => {
     });
     allTheTokens += sectionCheck.data.usage.total_tokens;
     const minimumDelay = 100;
-await new Promise((resolve) => setTimeout(resolve, minimumDelay));
+
 
 
     const answer = sectionCheck.data.choices[0].message.content;
