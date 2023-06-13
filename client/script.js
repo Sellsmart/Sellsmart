@@ -147,7 +147,7 @@ function checkForOffer() {
     console.log("This is the offername " + offerName);
     containsOffer = false;
     if(offerName.toLowerCase().includes("nike") && offerName.toLowerCase().includes("dunk") && offerName.toLowerCase().includes("red")){
-      chatContainer.innerHTML += chatStripe(true, offerName  + "\n" + `<div style="background-image: url(/assets/recimg/TeamRed.jpg);"class="imgForRecommend"></div><a class="buybutton" href="https://www.google.com" target="_parent">Check it out</a>`, "salestext"); 
+      chatContainer.innerHTML += chatStripe(true, offerName  + "\n" + `<div style="background-image: url(/TeamRed.jpg);"class="imgForRecommend"></div><a class="buybutton" href="https://www.google.com" target="_parent">Check it out</a>`, "salestext"); 
     }
     else if(offerName.toLowerCase().includes("nike") && offerName.toLowerCase().includes("dunk") && offerName.toLowerCase().includes("gold")){ 
       chatContainer.innerHTML += chatStripe(true, offerName  + "\n" + `<div style="background-image: url(/assets/recimg/TeamGold.jpg);"class="imgForRecommend"></div><a class="buybutton" href="https://www.google.com" target="_parent">Check it out</a>`, "salestext"); 
