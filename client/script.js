@@ -18,8 +18,7 @@ let isFirstQuestion = true;
 //check()
 openChatbot()
 spawnHelloMessage("Hi 👋, I am your personal shopping assistant. Nice to meet you 🤩")
-const minimumDelay = 3000;
-await new Promise((resolve) => setTimeout(resolve, minimumDelay));
+
 spawnHelloMessage("What product are you searching for?")
 isFirstQuestion = false;
 
