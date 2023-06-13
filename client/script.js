@@ -15,7 +15,7 @@ let loadInterval;
 let isFirstQuestion = true;
 
 
-//check()
+check()
 openChatbot()
 spawnHelloMessage("Hi 👋, I am your personal shopping assistant. Nice to meet you 🤩")
 
@@ -312,7 +312,7 @@ lastInput = data.get('prompt');
   else{
     promptToSend = data.get('prompt');
   }
-  const response = await fetch('https://sellsmart.onrender.com/', {
+  const response = await fetch('http://localhost:5102', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
