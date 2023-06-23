@@ -5,7 +5,7 @@ import { Configuration, OpenAIApi } from 'openai'
 
 
 
-const modelsToRecommend = "Nike dunk low: red:  $§|-Nike-Dunk-Low-Team-Red-$§|, gold: $§|-Nike-Dunk-Low-Team-Gold-$§|, orange: $§|-Nike-Dunk-Low-Team-Orange-$§|";
+const modelsToRecommend = "Link to our chatbot:  $§|-Our-Chatbot-The-Best-$§|";
 
 dotenv.config()
 let section = "";
@@ -94,23 +94,23 @@ app.post('/', async (req, res) => {
       information = "Compared to other chatbots this one is faster, can answer questions others can't, is trained to be nice to increase conversion.";
     }
     else if(answer.includes("Recommendation")){
-      information ="Model for small businesses (1-50 employess): $§|-START-$§| MODEL, Model for big businesses (50+ employees):  MODEL"
+      information ="Model for almost all businesses (1-50 employess): $§|-PRO-$§| MODEL"
     }
     else if(answer.includes("Models")){
-      information = " 3 models/ prices: Start : Fully working chatbot, Easy implementation, Chatbot trained on website, 550$. Pro: Same as start but with Custom chatbot design, 800$. Same as Starter but with Custom Chatbot design and extra features., 3200$. ";
+      information = " 1 model/ price, fully customisable, features:  Will convert more customers for you, 95% cheaper than hiring 1 customer assistant, implemented in only 3 clicks, personal design,You don't need to write one line of code. Link: $§|-Custom-|$§";
     }
     else if(answer.includes("Website")){
       information = "Homepage link: https://sellsmart.github.io/chatbot/ . "
     }
     else if (answer.includes("Product")){
-      information = " 3 models/ prices: Start : Fully working chatbot, Easy implementation, Chatbot trained on website, 550$. Pro: Same as start but with Custom chatbot design, 800$. Same as Starter but with Custom Chatbot design and extra features., 3200$.";
+      information = " 1 model/ price, fully customisable, features:  Will convert more customers for you, 95% cheaper than hiring 1 customer assistant, implemented in only 3 clicks, personal design,You don't need to write one line of code. Link: $§|-Custom-|$§";
 
     }
     else if(answer.includes("Contact")){
-      information = " Email: felixwolny1@gmail.com, phone: none, website: https://sellsmart.github.io/chatbot/support .";
+      information = " Email: getreadyforweb@gmx.de, phone: none, website: https://sellsmart.github.io/chatbot/support .";
     }
     else if(answer.includes("Shipment")){
-      information = " Product shipment: around 5-6 days. More information here: https://www.google.com";
+      information = " Product shipment: around 2-3 days.";
     }
     else if(answer.includes("Discount")){
       information=" If you contact we can talk about discounts.";
