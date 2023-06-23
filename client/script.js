@@ -25,7 +25,7 @@ function delay(milliseconds) {
 async function spawnHelloMessages() {
   spawnHelloMessage("Hi 👋, I am your personal shopping assistant. Nice to meet you 🤩");
   await delay(2500); // Adjust the delay time as per your requirement (in milliseconds)
-  spawnHelloMessage("What product are you searching for?");
+  spawnHelloMessage("What do you want to know?");
 }
 
 spawnHelloMessages();
@@ -320,7 +320,7 @@ lastInput = data.get('prompt');
   else{
     promptToSend = data.get('prompt');
   }
-  const response = await fetch('http://localhost:5102', {
+  const response = await fetch('https://sellsmart.onrender.com', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
