@@ -25,7 +25,7 @@ function delay(milliseconds) {
 async function spawnHelloMessages() {
   spawnHelloMessage("Hi 👋, I am your personal shopping assistant. Nice to meet you 🤩");
   await delay(2500); // Adjust the delay time as per your requirement (in milliseconds)
-  spawnHelloMessage("What do you want to know?");
+  spawnHelloMessage("Feel free to ask any question (Btw this message is fully customisable so you can great your customers the way you want 😀)");
 }
 
 spawnHelloMessages();
@@ -159,10 +159,18 @@ function checkForOffer() {
     console.log("This is the offername " + offerName);
     containsOffer = false;
     if(offerName.toLowerCase().includes("our") && offerName.toLowerCase().includes("chatbot") && offerName.toLowerCase().includes("best")){
-      chatContainer.innerHTML += chatStripe(true, "Chatbot for business: "  + "\n" + `<div style="background-image: url(https://images.pexels.com/photos/177707/pexels-photo-177707.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);"class="imgForRecommend"></div><a class="buybutton" href="#custom" target="_parent">Check it out</a>`, "salestext"); 
+      chatContainer.innerHTML += chatStripe(true, "Chatbot for business: "  + "\n" + `<div style="background-image: url(https://cdn.pixabay.com/photo/2019/03/21/15/51/chatbot-4071274_1280.jpg);"class="imgForRecommend"></div><a class="buybutton" href="#custom" target="_parent">Check it out</a>`, "salestext"); 
     }
     else if(offerName.toLowerCase().includes("custom")){
-      chatContainer.innerHTML += chatStripe(true, "Chatbot for business: "  + "\n" + `<div style="background-image: url(https://images.pexels.com/photos/177707/pexels-photo-177707.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);"class="imgForRecommend"></div><a class="buybutton" href="#custom" target="_parent">Check it out</a>`, "salestext");
+      chatContainer.innerHTML += chatStripe(true, "Chatbot for business: "  + "\n" + `<div style="background-image: url(https://cdn.pixabay.com/photo/2019/03/21/15/51/chatbot-4071274_1280.jpg);"class="imgForRecommend"></div><a class="buybutton" href="#custom" target="_parent">Check it out</a>`, "salestext");
+    }
+    else if(offerName.toLocaleLowerCase().includes("dunk") && offerName.toLocaleLowerCase().includes("low") && offerName.toLocaleLowerCase().includes("panda")){
+      chatContainer.innerHTML += chatStripe(true, "Nike Dunk Low Panda "  + "\n" + `<div style="background-image: url(https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/56ff13a0-d2e6-49ed-bfd2-43dc2ba0922b/dunk-low-schuh-fur-altere-DDR7fb.png);"class="imgForRecommend"></div><a class="buybutton" href="#custom" target="_parent">Check it out</a>`, "salestext");
+
+    }
+    else if(offerName.toLocaleLowerCase().includes("startoffer")){
+      chatContainer.innerHTML += chatStripe(true, "Backpack DISCOUNTED!"  + "\n" + `<div style="background-image: url(https://images.pexels.com/photos/3731256/pexels-photo-3731256.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);"class="imgForRecommend"></div><a class="buybutton" href="#custom" target="_parent">Check it out</a>`, "salestext");
+
     }
     
    
@@ -320,7 +328,7 @@ lastInput = data.get('prompt');
   else{
     promptToSend = data.get('prompt');
   }
-  const response = await fetch('https://sellsmart.onrender.com', {
+  const response = await fetch('http://localhost:5102', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
