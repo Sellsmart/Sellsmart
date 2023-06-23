@@ -7,7 +7,7 @@ let lastInput ="Hi";
 let containsOffer = false;
 let offerName = "";
 let isReadyForNewRequest = true;
-
+let ar = document.getElementById("area");
 let isOnPhone = true;
 let el = document.getElementById("app");
 
@@ -16,10 +16,19 @@ let isFirstQuestion = true;
 
 
 check()
+collapseChatbot()
 openChatbot()
-spawnHelloMessage("Hi 👋, I am your personal shopping assistant. Nice to meet you 🤩")
+function delay(milliseconds) {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
 
-spawnHelloMessage("What product are you searching for?")
+async function spawnHelloMessages() {
+  spawnHelloMessage("Hi 👋, I am your personal shopping assistant. Nice to meet you 🤩");
+  await delay(2500); // Adjust the delay time as per your requirement (in milliseconds)
+  spawnHelloMessage("What product are you searching for?");
+}
+
+spawnHelloMessages();
 isFirstQuestion = false;
 
 function spawnHelloMessage(helloMessage){
@@ -66,8 +75,9 @@ function setChatbotPosition(){
   el.style.bottom = "0vh";
   el.style.right = "0vw";
 }
-function openChatbot(){
 
+function openChatbot(){
+  ar.placeholder = "Ask something...";
   if(isOnPhone){
     
     console.log("IS ON PHONE");
@@ -84,6 +94,7 @@ function openChatbot(){
   }
   
 }
+
 function collapseChatbot(){
 
   
@@ -91,6 +102,7 @@ function collapseChatbot(){
     
     return;
   }
+  ar.placeholder = "Click";
   console.log(screen.width);
   document.getElementById("app").style.width = "100px";
   var wrappers = document.getElementsByClassName("wrapper");
@@ -146,17 +158,13 @@ function checkForOffer() {
     //Convert to readable string
     console.log("This is the offername " + offerName);
     containsOffer = false;
-    if(offerName.toLowerCase().includes("nike") && offerName.toLowerCase().includes("dunk") && offerName.toLowerCase().includes("red")){
-      chatContainer.innerHTML += chatStripe(true, offerName  + "\n" + `<div style="background-image: url(/TeamRed.jpg);"class="imgForRecommend"></div><a class="buybutton" href="https://www.google.com" target="_parent">Check it out</a>`, "salestext"); 
+    if(offerName.toLowerCase().includes("our") && offerName.toLowerCase().includes("chatbot") && offerName.toLowerCase().includes("best")){
+      chatContainer.innerHTML += chatStripe(true, "Chatbot for business: "  + "\n" + `<div style="background-image: url(https://images.pexels.com/photos/177707/pexels-photo-177707.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);"class="imgForRecommend"></div><a class="buybutton" href="#custom" target="_parent">Check it out</a>`, "salestext"); 
     }
-    else if(offerName.toLowerCase().includes("nike") && offerName.toLowerCase().includes("dunk") && offerName.toLowerCase().includes("gold")){ 
-      chatContainer.innerHTML += chatStripe(true, offerName  + "\n" + `<div style="background-image: url(/assets/recimg/TeamGold.jpg);"class="imgForRecommend"></div><a class="buybutton" href="https://www.google.com" target="_parent">Check it out</a>`, "salestext"); 
-
+    else if(offerName.toLowerCase().includes("custom")){
+      chatContainer.innerHTML += chatStripe(true, "Chatbot for business: "  + "\n" + `<div style="background-image: url(https://images.pexels.com/photos/177707/pexels-photo-177707.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);"class="imgForRecommend"></div><a class="buybutton" href="#custom" target="_parent">Check it out</a>`, "salestext");
     }
-    else if(offerName.toLowerCase().includes("nike") && offerName.toLowerCase().includes("dunk") && offerName.toLowerCase().includes("orange")){
-      chatContainer.innerHTML += chatStripe(true, offerName  + "\n" + `<div style="background-image: url(/assets/recimg/TeamOrange.jpg);"class="imgForRecommend"></div><a class="buybutton" href="https://www.google.com" target="_parent">Check it out</a>`, "salestext"); 
-
-    }
+    
    
 }
 chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -312,7 +320,7 @@ lastInput = data.get('prompt');
   else{
     promptToSend = data.get('prompt');
   }
-  const response = await fetch('https://sellsmart.onrender.com/', {
+  const response = await fetch('http://localhost:5102', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
