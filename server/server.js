@@ -5,7 +5,7 @@ import { Configuration, OpenAIApi } from 'openai'
 
 
 
-const modelsToRecommend = "Link to our chatbot:  $§|-Our-Chatbot-The-Best-$§|";
+const modelsToRecommend = "Link to our chatbot:  $§|-Our-Chatbot-The-Best-$§|, Nike dunk low black: $§|-Nike-Dunk-Low-Panda-$§|";
 
 dotenv.config()
 let section = "";
@@ -40,13 +40,13 @@ app.post('/', async (req, res) => {
     const generalCheck = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [
-        {role: "user", content: "Answer with one word. Is this question general or does he/she want a product" + prompt},
+        {role: "user", content: "Answer with one word. Match the prompt with either recommendation or information: " + prompt},
     ] 
     });
 
     let isSpecific = false;
     console.log("This is the answer for general check: " + generalCheck.data.choices[0].message.content);
-    isSpecific = generalCheck.data.choices[0].message.content.trim().toLowerCase().includes("general");
+    isSpecific = generalCheck.data.choices[0].message.content.trim().toLowerCase().includes("information");
     console.log("Is specific is: " + isSpecific);
     allTheTokens += generalCheck.data.usage.total_tokens;
     if(!isSpecific){
@@ -75,7 +75,7 @@ app.post('/', async (req, res) => {
     const sectionCheck = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [
-        {role: "user", content: "Sort this request " + prompt + " into one of these categories: Recommendation, Advanced Features, Staff costs, Competitive Advantages, different Models, Products, Contact, Discounts, Shipment, Website instructions. Respond with only the section name"},
+        {role: "user", content: "Sort this request " + prompt + " into one of these categories: Adv. Features, Staff Costs, Competitive Advantages, Recommendation, Models, Website, Product, Integration, Customer Support, Analytics, Language Support, Security, Customization, Scalability, Lead Generation, Contact, Discounts, Shipment, wheretobuy. Respond with only the section name"},
     ] 
     });
     allTheTokens += sectionCheck.data.usage.total_tokens;
@@ -84,28 +84,41 @@ app.post('/', async (req, res) => {
 
 
     const answer = sectionCheck.data.choices[0].message.content;
-    if(answer.includes("Advanced Features")){
-    information = "Our Chatbot is very advanced. Super functional, chatbot helps converts customer faster and with better experience. Easy to implement + adapts to the design of your website. Works 24/7. Good because it knows your website very well";
-    }
-    else if(answer.includes("Staff costs")){
-      information = "Easy to use, you don't need any more staff + no extra staff costs"
-    }
-    else if (answer.includes("Competitive Advantages")){
-      information = "Compared to other chatbots this one is faster, can answer questions others can't, is trained to be nice to increase conversion.";
-    }
-    else if(answer.includes("Recommendation")){
-      information ="Model for almost all businesses (1-50 employess): $§|-PRO-$§| MODEL"
-    }
-    else if(answer.includes("Models")){
-      information = " 1 model/ price, fully customisable, features:  Will convert more customers for you, 95% cheaper than hiring 1 customer assistant, implemented in only 3 clicks, personal design,You don't need to write one line of code. Link: $§|-Custom-|$§";
-    }
-    else if(answer.includes("Website")){
-      information = "Homepage link: https://sellsmart.github.io/chatbot/ . "
-    }
-    else if (answer.includes("Product")){
-      information = " 1 model/ price, fully customisable, features:  Will convert more customers for you, 95% cheaper than hiring 1 customer assistant, implemented in only 3 clicks, personal design,You don't need to write one line of code. Link: $§|-Custom-|$§";
-
-    }
+    if (answer.includes("Advanced Features")) {
+      information = "Advanced features, super functional, converts customers faster, easy implementation, adapts to website design, works 24/7.";
+  } else if (answer.includes("Staff costs")) {
+      information = "No extra staff needed, reduces costs.";
+  } else if (answer.includes("Competitive Advantages")) {
+      information = "Faster and smarter than others, increases conversions.";
+  } else if (answer.includes("Recommendation")) {
+      information = "Recommended for most businesses (1-50 employees): $§|-PRO-$§| MODEL.";
+  } else if (answer.includes("Models")) {
+      information = "1 model, fully customizable, converts more customers, 95% cheaper than hiring, implemented in 3 clicks, personal design, no coding required. Visit '$§|-Custom-|$§'.";
+  } else if (answer.includes("Website")) {
+      information = "Visit homepage: https://sellsmart.github.io/chatbot/ .";
+  } else if (answer.includes("Product")) {
+      information = "1 model, fully customizable, converts more customers, 95% cheaper than hiring, implemented in 3 clicks, personal design, no coding required. Visit '$§|-Custom-|$§'.";
+  } else if (answer.includes("Integration")) {
+      information = "Seamless integration with popular platforms like WordPress, Shopify, and more.";
+  } else if (answer.includes("Customer Support")) {
+      information = "24/7 customer support available.";
+  } else if (answer.includes("Analytics")) {
+      information = "Comprehensive analytics dashboard for insights.";
+  } else if (answer.includes("Language Support")) {
+      information = "Supports multiple languages for a global customer base.";
+  } else if (answer.includes("Security")) {
+      information = "Data security and encryption measures.";
+  } else if (answer.includes("Customization")) {
+      information = "Customizable colors, fonts, and chatbot avatar.";
+  } else if (answer.includes("Scalability")) {
+      information = "Scales for businesses of any size.";
+  } else if (answer.includes("Lead Generation")) {
+      information = "Captures leads and customer information.";
+  }
+  else if (answer.includes("wheretobuy")) {
+    information = "You can buy the chatbot right at this website!";
+}
+  
     else if(answer.includes("Contact")){
       information = " Email: getreadyforweb@gmx.de, phone: none, website: https://sellsmart.github.io/chatbot/support .";
     }
