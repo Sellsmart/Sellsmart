@@ -93,11 +93,11 @@ app.post('/', async (req, res) => {
   } else if (answer.includes("Recommendation")) {
       information = "Recommended for most businesses (1-50 employees): $§|-PRO-$§| MODEL.";
   } else if (answer.includes("Models")) {
-      information = "1 model, fully customizable, converts more customers, 95% cheaper than hiring, implemented in 3 clicks, personal design, no coding required. Visit '$§|-Custom-|$§'.";
+      information = "1 model, fully customizable, converts more customers, 95% cheaper than hiring, implemented in 3 clicks, personal design, no coding required.'.";
   } else if (answer.includes("Website")) {
       information = "Visit homepage: https://sellsmart.github.io/chatbot/ .";
   } else if (answer.includes("Product")) {
-      information = "1 model, fully customizable, converts more customers, 95% cheaper than hiring, implemented in 3 clicks, personal design, no coding required. Visit '$§|-Custom-|$§'.";
+      information = "1 model, fully customizable, converts more customers, 95% cheaper than hiring, implemented in 3 clicks, personal design, no coding required.'.";
   } else if (answer.includes("Integration")) {
       information = "Seamless integration with popular platforms like WordPress, Shopify, and more.";
   } else if (answer.includes("Customer Support")) {
