@@ -32,13 +32,13 @@ import { getFirestore, collection, doc, setDoc, getDoc, updateDoc } from "fireba
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAPzPjkRTuAX9IQVSra86STA2kxuJ9R-Ig",
-  authDomain: "sellsmart-f3bd7.firebaseapp.com",
-  projectId: "sellsmart-f3bd7",
-  storageBucket: "sellsmart-f3bd7.appspot.com",
-  messagingSenderId: "440691284374",
-  appId: "1:440691284374:web:59ef9c57fe69855caaa5b7",
-  measurementId: "G-8LEQLJB95L"
+  apiKey: process.env.FIRESHIP_API_KEY,
+  authDomain: process.env.authdomain,
+  projectId: process.env.projectid,
+  storageBucket: process.env.storagebucket,
+  messagingSenderId: process.env.msid,
+  appId: process.env.appid,
+  measurementId: process.env.measurementid
 };
 
 // Initialize Firebase
