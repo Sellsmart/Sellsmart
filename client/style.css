@@ -55,6 +55,41 @@ transition: scale 200ms;
   text-decoration: none;
   transition: scale 200ms;
 }
+.closeButton{
+  position: fixed;
+    left: -6px;
+    top: -20px;
+    display: block;
+    border: 1px solid black;
+    padding: 15px;
+    border-radius: 30px;
+    height: auto;
+    width: auto;
+    margin-top: 0px;
+    font-size: 25px;
+    scale: 1;
+    margin-left: 0px;
+    background-color: #d0d0d0;
+    z-index: 15;
+    line-height: 0.5;
+    scale: 0.7;
+    opacity: 1;
+    transition: opacity 0.1s ease, scale 100ms;
+}
+.ratebutton{
+  border-radius: 15px;
+  background: black;
+  padding: 15px;
+  color: wheat;
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px;
+  margin-left: 0px;
+}
+.closeButton:hover{
+  scale: 0.73;
+  cursor: pointer;
+}
 #salestext{
   line-height: 1.3;
     color: rgb(246, 254, 250);
