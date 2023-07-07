@@ -52,7 +52,7 @@ async function productRecommended(what){
 
 console.log("Product got recommended");
   const promptSend = what + "prslsgo!24";
-  const response = await fetch('http://localhost:5102', {
+  const response = await fetch('https://sellsmart.onrender.com', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -87,7 +87,7 @@ chatContainer.innerHTML += chatStripe(
 );
   console.log("We got a bad review :-(");
   const promptSend = "it is a bad review with this review given -.--.";
-  const response = await fetch('http://localhost:5102', {
+  const response = await fetch('https://sellsmart.onrender.com', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -137,7 +137,7 @@ chatContainer.innerHTML += chatStripe(
 );
   console.log("We got a bad review :-(");
   const promptSend = "it is a good review with this review given -.--.";
-  const response = await fetch('http://localhost:5102', {
+  const response = await fetch('https://sellsmart.onrender.com', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -485,7 +485,7 @@ lastInput = data.get('prompt');
   else{
     promptToSend = data.get('prompt');
   }
-  const response = await fetch('http://localhost:5102', {
+  const response = await fetch('https://sellsmart.onrender.com', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
