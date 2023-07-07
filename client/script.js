@@ -18,11 +18,16 @@ let isFirstQuestion = true;
 let questionsAsked = 0;
 
 
+
+
+
 check()
 
 
 
 openChatbot()
+stopTimer()
+startTimer(20000)
 
 function delay(milliseconds) {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
@@ -47,7 +52,7 @@ async function productRecommended(what){
 
 console.log("Product got recommended");
   const promptSend = what + "prslsgo!24";
-  const response = await fetch('https://sellsmart.onrender.com', {
+  const response = await fetch('http://localhost:5102', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -82,7 +87,7 @@ chatContainer.innerHTML += chatStripe(
 );
   console.log("We got a bad review :-(");
   const promptSend = "it is a bad review with this review given -.--.";
-  const response = await fetch('https://sellsmart.onrender.com', {
+  const response = await fetch('http://localhost:5102', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -110,8 +115,9 @@ chatContainer.innerHTML += chatStripe(
 }
 var timerId;
 
-function startTimer() {
-  timerId = setTimeout(triggerFunction, 45000); // Start the timer for 15 seconds (15,000 milliseconds)
+function startTimer(timespend) {
+  console.log("Started Timer");
+  timerId = setTimeout(triggerFunction, timespend); // Start the timer for 60 seconds (60,000 milliseconds)
 }
 
 function stopTimer() {
@@ -121,7 +127,7 @@ function stopTimer() {
 function triggerFunction() {
   collapseChatbot();
 }
-startTimer();
+
 async function gotGoodReview(){
   document.getElementById("rev-good").style.opacity = 0.4;
 document.getElementById("rev-bad").style.opacity = 0.4;
@@ -131,7 +137,7 @@ chatContainer.innerHTML += chatStripe(
 );
   console.log("We got a bad review :-(");
   const promptSend = "it is a good review with this review given -.--.";
-  const response = await fetch('https://sellsmart.onrender.com', {
+  const response = await fetch('http://localhost:5102', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -197,13 +203,10 @@ document.addEventListener('click', function(event) {
   var clickedElementId = clickedElement.id;
 
   console.log('Clicked element ID: ' + clickedElementId);
-  if(clickedElementId == "myButton"){
+  
+  if (clickedElementId === "myButton" || !clickedElementId) {
     collapseChatbot();
-  }
-  if(clickedElementId == ""){
-    collapseChatbot();
-  }
-  else {
+  } else {
     openChatbot();
   }
 });
@@ -220,7 +223,8 @@ function setChatbotPosition(){
 }
 
 function openChatbot(){
-  startTimer();
+stopTimer();
+startTimer(450000);
   ar.placeholder = "Ask something...";
   if(isOnPhone){
     
@@ -481,7 +485,7 @@ lastInput = data.get('prompt');
   else{
     promptToSend = data.get('prompt');
   }
-  const response = await fetch('https://sellsmart.onrender.com', {
+  const response = await fetch('http://localhost:5102', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -495,7 +499,8 @@ lastInput = data.get('prompt');
   messageDiv.innerHTML = '';
 
   if (response.ok) {
-    startTimer();
+    stopTimer();
+    startTimer(45000);
     questionsAsked++;
     console.log("Currently " + questionsAsked + " questions have been asked");
     isReadyForNewRequest = true;

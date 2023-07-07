@@ -43,6 +43,14 @@ transition: scale 200ms;
 .novis{
   display: none;
 }
+#butttooon{
+  width: auto;
+  height: auto;
+  display: block;
+  position: relative;
+  left: initial;
+  top: initial;
+}
 .buybutton{
   font-size: 22px;
   background-color: rgb(6, 4, 0);
